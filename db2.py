@@ -41,7 +41,6 @@ def find_by_name(name, db):
     Найти билеты по имени исполнителя (в том числе – по подстроке),
     и выведите их по возрастанию цены
     """
-    name = re.escape(name)
     regex = re.compile(r'\w*{}\w*'.format(name))
     tickets = list(db.concert_tickets_list.find({'Исполнитель': regex}).sort('Цена', pymongo.ASCENDING))
     for ticket in tickets:
