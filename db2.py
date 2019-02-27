@@ -32,8 +32,8 @@ def find_cheapest(db):
     Документация: https://docs.mongodb.com/manual/reference/operator/aggregation/sort/
     """
     cheapest_tickets = list(db.concert_tickets_list.find().sort('Цена', pymongo.ASCENDING))
-    print('Самый дешевый билет на концерт {} стоит {}'.format(cheapest_tickets[0]['Исполнитель'],
-                                                              cheapest_tickets[0]['Цена']))
+    for ticket in cheapest_tickets:
+        print('{} {} {}'.format(ticket['Дата'], ticket['Исполнитель'], ticket['Цена']))
 
 
 def find_by_name(name, db):
@@ -41,6 +41,7 @@ def find_by_name(name, db):
     Найти билеты по имени исполнителя (в том числе – по подстроке),
     и выведите их по возрастанию цены
     """
+    name = re.escape(name)
     regex = re.compile(r'\w*{}\w*'.format(name))
     tickets = list(db.concert_tickets_list.find({'Исполнитель': regex}).sort('Цена', pymongo.ASCENDING))
     for ticket in tickets:
