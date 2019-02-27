@@ -21,7 +21,6 @@ def read_data(csv_file, db):
         for cell in reader:
             cell['Цена'] = int(cell['Цена'])
             date_str = cell['Дата'] + '.{}'.format(datetime.now().year)
-            cell['Дата'] = datetime.strptime(date_str, '%d.%m.%Y').date()
             concert_tickets_data.append(cell)
         concert_tickets_list = db.concert_tickets_list
         concert_tickets_list.insert_many(concert_tickets_data)
